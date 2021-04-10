@@ -1,0 +1,142 @@
+@use "../mixins/mixins" as mixin;
+@use "../colors/colors";
+@use "../fonts/fonts";
+.nav-toggle {
+  display: none;
+}
+header {
+  position: relative;
+  background-color: colors.$nav-background;
+  width: 100%;
+  padding: 0 1rem;
+  height: 10vh;
+}
+/* navbar */
+.nav {
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  width: 100%;
+  background-color: colors.$nav-background;
+  color: #fff;
+  transform: scale(1, 0);
+}
+
+.nav-toggle:checked ~ nav {
+  transform: scale(1, 1);
+}
+
+.nav-toggle-label {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+}
+
+.hamburger {
+  position: relative;
+  height: 2rem;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  pointer-events: none;
+  &__inner {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    height: 3px;
+    background-color: #fff;
+    opacity: 1;
+    transition: opacity 100ms ease 150ms;
+  }
+  &__outter::before,
+  &::after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    height: 3px;
+    background-color: #fff;
+    transition: transform 0.2s ease-in-out;
+  }
+  &__outter::before {
+    top: 5px;
+    left: 0;
+  }
+  &::after {
+    bottom: 5px;
+    left: 0;
+  }
+}
+
+.nav-toggle:checked + .nav-toggle-label .hamburger {
+  &__inner {
+    opacity: 0;
+    transition: opacity 250ms ease;
+  }
+  &__outter::before {
+    top: unset;
+    @include mixin.hamburgerLines(1px, 45deg);
+  }
+  &::after {
+    bottom: unset;
+    @include mixin.hamburgerLines(-2px, -45deg);
+  }
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5vh;
+  height: 5vh;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.nav-list {
+  list-style-type: none;
+
+  &-item {
+    text-align: center;
+  }
+
+  &-link {
+    text-decoration: none;
+    color: colors.$nav-text-color;
+    font-family: fonts.$heading;
+  }
+}
+
+@media (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 3rem min-content 1fr 3rem;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+  .logo {
+    grid-column: 2/3;
+  }
+  .nav {
+    all: unset;
+    grid-column: 3/4;
+    place-self: end;
+    align-self: center;
+  }
+  .nav-list {
+    display: flex;
+  }
+  .nav-list-item {
+    margin: 0 1rem;
+  }
+}

@@ -1,21 +1,9 @@
-/* Box sizing rules */
+/* Box sizing rules, Remove default margin and padding  */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-/* Remove default margin */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
-blockquote,
-dl,
-dd {
+  padding: 0;
   margin: 0;
 }
 
